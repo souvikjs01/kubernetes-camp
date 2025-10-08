@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginxsvk
+spec:
+  containers:
+  - name: nginxsvk
+    image: nginx:1.14.2-alpine
+    ports:
+    - containerPort: 80
