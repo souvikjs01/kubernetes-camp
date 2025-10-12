@@ -1,0 +1,23 @@
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: nginx-pod
+  namespace: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+  tolerations:
+    - key: "prod"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+      
+
+# taint: prevent the node from scheduling the pod
+#       - kubectl taint node my-cluster-worker2 prod=true:NoSchedule 
+# untaint: 
+#       - kubectl taint node my-cluster-worker2 prod=true:NoSchedule-
+#toleration: if the toleration is applied the pod will be schedule irrespective of taints
