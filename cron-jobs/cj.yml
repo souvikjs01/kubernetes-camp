@@ -5,7 +5,7 @@ metadata:
   namespace: nginx
 
 spec:
-  schedule: "* * * * *"
+  schedule: "* * * * *"       # min, hour, day, day of week, day of month.
   jobTemplate:
     spec: 
       template:
