@@ -1,40 +1,39 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pg-statefulset
+  name: pgdb
   namespace: pgsql
 spec:
-  serviceName: pgsql-service
-  replicas: 3
   selector:
     matchLabels:
       app: pgsql
+  serviceName: pgsql-svc
+  replicas: 3
   template:
     metadata:
       labels:
         app: pgsql
     spec:
       containers:
-      - name: postgres
+      - name: pgsql
         image: postgres:15-alpine
         ports:
         - containerPort: 5432
         env:
-        - name: POSTGRES_DB
-          value: mydb
-        - name: POSTGRES_USER
-          value: admin
-        - name: POSTGRES_PASSWORD
-          value: password123
+          - name: POSTGRES_USER
+            value: "admin"
+          - name: POSTGRES_PASSWORD
+            value: "admin123"
+          - name: POSTGRES_DB
+            value: "mydb"
         volumeMounts:
-        - name: postgres-data
+        - name: pgsql-data
           mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
       name: pgsql-data
     spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: local-path
+      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 1Gi
